@@ -24,7 +24,7 @@
                     <p class="busqueda-vacia">El campo de búsqueda no puede quedar vacío.</p>
                 </form>
                 <button type="button" class="carrito">
-                    <span class="badge">1</span>
+                    <span id="carritoNumber" class="badge">0</span>
                     <div class="toast-exito">
                         <img src="img/tilde.svg" alt="" />
                         <p>Carrito eliminado con éxito.<br />
@@ -475,7 +475,7 @@
         <div class="carrito-contenido">
           <div class="carrito-header">
               <h2>Mi carrito</h2>
-              <button type="button" class="cruz"></button>
+              <button id="cerrarCarrito" type="button" class="cruz"></button>
           </div>
           <div class="carrito-cuerpo">
               
@@ -593,7 +593,7 @@
               </div>
               <div class="carrito-botones">
                   <button type="button" class="btn-terciario">Eliminar carrito</button>
-                  <button type="button" class="btn-secundario">Cerrar</button>
+                  <button id="cerrarCarrito" type="button" class="btn-secundario">Cerrar</button>
                   <button type="button" class="btn-primario">Comprar carrito</button>
               </div>
           </div>
@@ -641,5 +641,7 @@
 	<!-- Fin Drawer modal salir -->
 
     <script src="js/app.js"></script>
+    <script src="js/crearArticulos.js"></script>
+    <script src="js/carrito.js"></script>
 </body>
 </html>

@@ -404,7 +404,7 @@ header {
 .contenedor-img-articulo {
   	width: 100%;
   	aspect-ratio: 3/2; 
-	/* background-image: url(/img/img-ejemplo1.jpg); 	 */
+	/* background-image: url(/img/HC/HC8152-NEGRO.jpg); 	 */
   	background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -1020,7 +1020,7 @@ footer li img {
 .contenedor-img-carrito {
 	width: 72rem;
 	height: 72rem;
-	background-image: url(/img/img-ejemplo1.jpg);
+	/* background-image: url(/img/img-ejemplo1.jpg); */
   	background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
