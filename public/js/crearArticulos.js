@@ -42,7 +42,7 @@ function showArts(art, message){
                   <button type="button" class="mas"></button>
                 </div>
               </div>
-              <button id="articulo-compra" type="button" class="btn-primario ${p.codigo}">Agregar al carrito</button>
+              <button id="articulo-compra" type="button" class="btn-primario ${p.codigo} articulo-compra">Agregar al carrito</button>
             </div>
           </div>
         `
@@ -51,8 +51,8 @@ function showArts(art, message){
         boton.setAttribute("precio", p.precio);
         boton.setAttribute("nombre", p.nombre);
         boton.setAttribute("imagen", imagen);
-      }   
-       
+      } 
+      
     });
 
 mostrador.addEventListener('click', event=>{

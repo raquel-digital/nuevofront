@@ -23,7 +23,8 @@ router.get("/admin/pedidos", (req, res) => {
   // }else{
   //   res.redirect("/login-admin");
   // }
-  res.sendFile(path.resolve("./public/index-admin-pedidos.html"))
+  //res.sendFile(path.resolve("./public/index-admin-pedidos.html"))
+  res.send("ok")
 })
 router.get("/admin/pedidos/local", (req, res) => {
   // if(middleware.validAdmin(log)){
@@ -57,8 +58,8 @@ router.get("/login-admin", (req,res) => {
           }
       })();
     })   
-    //res.sendFile(path.resolve("./public/index.html"))
-    res.redirect("/")
+    res.sendFile(path.resolve("./public/categ.html"))
+    //res.redirect("/")
 })
 //-----BUSCADOR-----
 router.get("/buscador", (req, res) => {
@@ -66,11 +67,12 @@ router.get("/buscador", (req, res) => {
   io.once('connect', socket => {     
     (async () => {
         const buscar = req.query.buscar.toLocaleLowerCase();
-        const result = await controller.buscarArticulo(buscar);        
-        socket.emit("resultado-busqueda", result);
+        const result = await controller.buscarArticulo(buscar); 
+        const data = { result: result, query: buscar}       
+        socket.emit("resultado-busqueda", data);
     })();
   })   
-  res.sendFile(path.resolve("./public/index-categ.html"));  
+  res.sendFile(path.resolve("./public/categ.html"));  
 })
 
 //----POST--------------
