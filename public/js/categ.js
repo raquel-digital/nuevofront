@@ -19,7 +19,7 @@ function tags(art){
     const botonera = document.querySelector(".filtros")
     botonera.innerHTML = `<h2>Filtrar por:</h2>
     `;
-    botonera.innerHTML += `<button class="fqa">inicio</button>`;
+    botonera.innerHTML += `<button type="button" class="tag">inicio</button>`;
     for(let t of art){  
             
           if(t.tags.includes(" ")){          
