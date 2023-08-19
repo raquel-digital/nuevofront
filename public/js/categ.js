@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
         if(data.succes){
             mostrador.innerHTML = ""
             showArts(data.result)
-            tags(data.result)        
+            tags(data.result) 
+            mostradorDeArticulos = data.result //guardamos los articulos para filtrar     
         }else{
             alert("Categoria no valida")
         }    
@@ -19,7 +20,7 @@ function tags(art){
     const botonera = document.querySelector(".filtros")
     botonera.innerHTML = `<h2>Filtrar por:</h2>
     `;
-    botonera.innerHTML += `<button type="button" class="tag">inicio</button>`;
+    botonera.innerHTML += `<button type="button" class="tag hashtag">inicio</button>`;
     for(let t of art){  
             
           if(t.tags.includes(" ")){          
@@ -42,7 +43,7 @@ function tags(art){
       if(t.includes("-")){
         t = t.replaceAll("-", " ");
       }
-      botonera.innerHTML += `<button type="button"  class="tag">${t}</button>`
+      botonera.innerHTML += `<button type="button"  class="tag hashtag">${t}</button>`
     }
   
     //botonera.innerHTML += `<button class="hashtagAll">todos los articulos</button>`;
