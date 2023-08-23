@@ -45,13 +45,15 @@ router.get("/login-admin", (req,res) => {
 //-----CATEGS-----------
  router.get("/categoria/", (req, res) => {    
     const categOrganicer =  require("../utils/cargarCategoria");
-    const categ = req.query.categ.toLowerCase();
+    const categIO = req.query.categ
+    const categ = req.query.categ.toLowerCase()
     const tag = req.query.tag;    
     let io = require('../io.js').get();  
     io.once('connect', socket => {    
       (async () => {
           socket.emit("loading")
           let result = await categOrganicer(categ);
+          result.categ = categIO
           socket.emit("categ-result", result);
           if(tag){            
             socket.emit("tag-result", tag);            
@@ -64,9 +66,15 @@ router.get("/login-admin", (req,res) => {
 //-----BUSCADOR-----
 router.get("/buscador", (req, res) => {
   let io = require('../io.js').get();  
-  io.once('connect', socket => {     
-    (async () => {
+  io.once('connect', socket => {
+    (async () => {      
         const buscar = req.query.buscar.toLocaleLowerCase();
+        
+        if(req.query.buscar == " "){
+          console.log("ok")
+          socket.emit("resultado-vacio");
+          return
+        }
         const result = await controller.buscarArticulo(buscar); 
         const data = { result: result, query: buscar}       
         socket.emit("resultado-busqueda", data);
@@ -121,5 +129,12 @@ router.post("/mercadopago", (req, res) => {
       console.log(error);
     });
 });
+
+
+//--check out
+router.get("/check-out", (req,res) => {
+  res.sendFile(path.resolve("./public/check-out.html"))
+})
+
 
 module.exports = router ;

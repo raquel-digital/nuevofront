@@ -1,7 +1,10 @@
 //local storage
-//const carrito = localStorage.getItem("carrito");
-
-const carrito = []//temporario
+let carrito = JSON.parse(localStorage.getItem("carrito"))
+if(carrito == null || carrito == undefined){
+    carrito = []
+}
+console.log(carrito)
+//const carrito = []//temporario
 //contador de items
 const itemsCarrito = document.querySelector("#carritoNumber")
 if(carrito.lenght > 0){
@@ -19,14 +22,15 @@ document.querySelector(".carrito").addEventListener('click', event=>{
     const carritoShow = document.querySelector(".drawer-carrito");
     carritoShow.style.display = "block"
 })
-  
+ 
+//eventos dentro del carrito
 document.querySelector(".drawer-carrito").addEventListener('click', event=>{
   const mouse = event.target
-  
+  const carritoShow = document.querySelector(".drawer-carrito");
+
   //cerrar carrito
   if(mouse.id == "cerrarCarrito"){
-    const cerrar = document.querySelector(".drawer-carrito")
-    cerrar.style.display = "none"
+    carritoShow.style.display = "none"
   }
   //eliminar artículo individual
   if(mouse.classList.contains("eliminar-articulo")){
@@ -35,17 +39,34 @@ document.querySelector(".drawer-carrito").addEventListener('click', event=>{
         for(let i=0; i<carrito.length; i++){
             if(carrito[i].codigo == codigo){
                 carrito.splice(i, 1)
+                //itemsCarrito.value = carrito.length;                
                 actualizarCarrito()
+                
+                if(carrito.lenght == 0){                    
+                    //itemsCarrito.style.display = "none"
+                    const footer = document.querySelector(".carrito-footer")
+                    footer.style.display = "none"
+                }
+                console.log(carrito.lenght)
+                localStorage.setItem("carrito", JSON.stringify(carrito))
             }
         }
     }
 
     if(mouse.id == "eliminar-carrito"){
-        carrito.length = 0
-        itemsCarrito.value = carrito.length;
-        itemsCarrito.style.display = "none"
+        carrito.length = 0                
         actualizarCarrito()
+        localStorage.setItem("carrito", JSON.stringify(carrito))
     }
+    if(mouse.id == "confirmar-compra"){
+        window.location = "http://localhost:8080/check-out"
+    }
+
+    //TEST cierre haciendo click fuera del carrito
+    if (mouse.classList.contains("drawer-carrito")) {
+        carritoShow.style.display = "none"
+    }    
+    console.log(mouse.classList)
 })
 
 
@@ -53,6 +74,33 @@ const carritoBody = document.querySelector(".carrito-cuerpo");
 carritoBody.addEventListener('click', event=>{
     asignarMasMenos(event.target, true)
 })
+
+function ingresarCarrito(art){
+    if(art.cantidad_venta < 1){
+        alert("La cantidad del artículo debe ser mayor a cero")
+    }else{
+        if(carrito.length == 0){
+            carrito.push(art);                
+        }else{
+            let check = false
+            for(const c of carrito){
+                if(c.codigo === art.codigo){
+                    const a = Number(c.cantidad_venta)
+                    const b = Number(art.cantidad_venta)
+                    c.cantidad_venta = a + b
+                    check = true
+                }
+            }
+            if(!check){
+                carrito.push(art);
+            }
+        }
+    }
+    
+    itemsCarrito.style.display = "block"
+    itemsCarrito.textContent = carrito.length;
+    localStorage.setItem("carrito", JSON.stringify(carrito))
+}
 
 function actualizarCarrito(){
     const carritoBody = document.querySelector(".carrito-cuerpo");
@@ -62,7 +110,8 @@ function actualizarCarrito(){
 
     if(carrito.length == 0){
         document.getElementById("eliminar-carrito").style.display = "none"
-        document.getElementById("eliminar-carrito").style.display = "none"
+        const footer = document.querySelector(".carrito-footer")
+        footer.style.display = "none"
 
         carritoBody.innerHTML +=  
         `<div class="carrito-emptystate">
@@ -72,10 +121,14 @@ function actualizarCarrito(){
             <button type="button" class="btn-primario">Ir a comprar</button>
          </div>`
     }else{
+        const footer = document.querySelector(".carrito-footer")
+        footer.style.display = "block"
+        document.getElementById("eliminar-carrito").style.display = "block"
+
         for(const c of carrito){
-        
+            console.log(c)
             const precio = c.precio * c.cantidad_venta
-    
+            
             carritoBody.innerHTML += `
                 <div class="carrito-item">
                 <div class="contenedor-img-carrito" style="background-image: url(${c.imagen});"></div>
@@ -94,7 +147,10 @@ function actualizarCarrito(){
                 </div>
             `
             sumaTotal += precio
-        }    
+        } 
+        
+        itemsCarrito.value = carrito.length;
+        itemsCarrito.style.display = "none"   
     }
     
     //BUG SI NO HAY ELEAMENTOS CARGADOS NO ABRE EL CARRITO

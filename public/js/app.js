@@ -19,73 +19,85 @@ mostrador.addEventListener('click', event=>{
             imagen: boton.getAttribute("imagen"),
             cantidad_venta: Number(cantidad_venta) 
         }
-       
-        if(art.cantidad_venta < 1){
-            alert("La cantidad del artículo debe ser mayor a cero")
-        }else{
-            if(carrito.length == 0){
-                carrito.push(art);                
-            }else{
-                let check = false
-                for(const c of carrito){
-                    if(c.codigo === art.codigo){
-                        const a = Number(c.cantidad_venta)
-                        const b = Number(art.cantidad_venta)
-                        c.cantidad_venta = a + b
-                        check = true
-                    }
-                }
-                if(!check){
-                    carrito.push(art);
-                }
-            }
-        }
-        
-        itemsCarrito.style.display = "block"
-        itemsCarrito.textContent = carrito.length;
-        
+
+        ingresarCarrito(art)
     }
-    
+
+    //abrir y cerrar descripcion de artículo    
+    if(mouse.classList.contains("chevron")){
+        if(mouse.classList.contains("chevron-up")){        
+            mouse.classList.remove("chevron-up")
+            const mostrar = mouse.parentElement.nextElementSibling
+            mostrar.style.display = "none"
+        }else{
+            mouse.classList.add("chevron-up")
+            const mostrar = mouse.parentElement.nextElementSibling
+            mostrar.style.display = "block"
+        }
+    }    
+
+    if(mouse.textContent == "Ver descripción"){
+        if( !mouse.nextElementSibling.classList.contains("chevron-up")){
+            mouse.nextElementSibling.classList.add("chevron-up")
+            const mostrar = mouse.parentElement.nextElementSibling
+            mostrar.style.display = "block"
+        }else{
+            mouse.nextElementSibling.classList.remove("chevron-up")
+            const mostrar = mouse.parentElement.nextElementSibling
+            mostrar.style.display = "none"
+        }        
+    }
 })
+
 //Filtros Tags
-document.querySelector(".filtros").addEventListener('click', event=>{
-    const mouse = event.target
-    
-    if(mouse.classList.contains("hashtag")){   
-      
-        mostrador.innerHTML = "";
-      
-        let articulosTags = []
-        const clikTag = mouse.textContent.replaceAll(" ", "-");      
+const filtros = document.querySelector(".filtros")
+if(filtros){
+    filtros.addEventListener('click', event=>{
+        const mouse = event.target
         
-        for(let p of mostradorDeArticulos){ 
-          p.tags = p.tags.replaceAll(" ", "-");
-                            
-            let codigo = p.tags;         
+        if(mouse.classList.contains("hashtag")){   
           
-            if(codigo.includes(clikTag)){
-              articulosTags.push(p);
-            }
-      }
-       
-        loadTag(articulosTags);
-      }
-})
+            mostrador.innerHTML = "";
+          
+            let articulosTags = []
+            const clik = mouse.textContent;
+            const clikTag = mouse.textContent.replaceAll(" ", "-");      
+            
+            for(let p of mostradorDeArticulos){ 
+              p.tags = p.tags.replaceAll(" ", "-");
+                                
+                let codigo = p.tags;         
+              
+                if(codigo.includes(clikTag)){
+                  articulosTags.push(p);
+                }
+          }
+           
+            loadTag(articulosTags, clik);
+          }
+    })
+}
+
 
 //Cargar TAGS de artículos
-function loadTag(articulosTags){    
+function loadTag(articulosTags, target){ 
     
-    // if(mostradorDeArticulos.length > indice){
-    //   paginador.innerHTML = "";        
-
-      //crearPaginador(mostradorDeArticulos);
-      //asignadorPaginador(1, mostradorDeArticulos);
-    // }else{
-    //   paginador.innerHTML = "";
-    // }
-    // paginador.innerHTML = "";
+    const tags = document.querySelectorAll(".hashtag")
+    tags.forEach(e => {        
+        if(e.classList.contains("tag-seleccionado")){
+            e.classList.remove("tag-seleccionado")
+        }
+        if(e.textContent == target){
+            e.classList.add("tag-seleccionado")
+        }
+    })
     
-    showArts(articulosTags);
+    if(articulosTags.length > indice){        
+        crearPaginador(articulosTags);
+        asignadorPaginador(1);
+    }else{        
+        showArts(articulosTags);
+    }
   
     if(mostrador.innerHTML === ""){
       mostrador.innerHTML += `

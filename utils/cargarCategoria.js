@@ -8,7 +8,7 @@ async function loadCateg(query){
       }
       const categ = query.toLowerCase();
       
-      if(categ == "alfiler-agujas"){
+      if(categ == "alfileres y agujas"){
        const result = await filtrar(["AF","AG","AT","BA","GA"]);
        
        if(result.length > 0){
@@ -40,7 +40,7 @@ async function loadCateg(query){
         return { succes: true, result: result } 
        }       
       }
-      if(categ == "botones-broches"){
+      if(categ == "botones y broches"){
        const result = await filtrar(["BO","BP","BR","CS-BROCHE"]);
        if(result.length > 0){
         return { succes: true, result: result } 
@@ -70,7 +70,7 @@ async function loadCateg(query){
              return { succes: true, result: result } 
             }
       }
-      if(categ == "elasticos"){        
+      if(categ == "elásticos"){        
        const result = await filtrar(["EL","EN"]);
        if(result.length > 0){
         return { succes: true, result: result } 
@@ -118,7 +118,7 @@ async function loadCateg(query){
         return { succes: true, result: result } 
        }
       }
-      if(categ == "matrices-insumos"){      
+      if(categ == "matrices e insumos"){      
        const result = await filtrar(["BU","BR","BS","CR","CS-BROCHE"]);
        if(result.length > 0){
         return { succes: true, result: result } 

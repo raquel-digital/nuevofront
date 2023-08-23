@@ -42,9 +42,25 @@ io.on('connect', socket => {
         }        
         catch(err){            
             console.log(err + " Error en inciar articulos WEB");  
-        }        
+        }   
+        //obtener valores de envío
+        socket.on("get-valor-envio", () => {
+            const envios = {
+                correoReg: Number(process.env.valorCorreoReg), //requer.envioCorreoReg,
+                correoNac: Number(process.env.valorCorreoNac), //requer.envioCorreoNac,
+                correoNac2:  Number(process.env.valorCorreoNac2),//requer.envioCorreoNac2,
+                moto: Number(process.env.valorMoto), //requer.envioMoto,
+                expreso: Number(process.env.valorExpreso) //requer.envioExpreso
+            }
+            socket.emit("set-envio", envios);
+        })     
      })();
-})
+     socket.on("success", () => {
+        const provincias = require("./utils/provincias.json");
+        socket.emit("provincias", provincias);
+    })        
+});
+     
 
 
 

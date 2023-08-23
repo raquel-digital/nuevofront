@@ -25,10 +25,10 @@ function showArts(art, message){
             </div>
             <div class="contenedor-info-articulo">
               <h3>${p.nombre}</h3>
-              <p class="info-gral-articulo"${p.nombre2}</p>
+              <p class="info-gral-articulo">${p.nombre2}</p>
               <div class="descripcion-titulo">
                 <p>Ver descripción</p>
-                <button type="button" class="chevron chevron-up"></button>
+                <button type="button" class="chevron"></button>
               </div>
               <p class="descripcion-texto" style="display:none;">${p.descripcion}<br/><span>Código:</span> ${p.codigo}<br/><span>Unidad de venta:</span> ${p.CantidadDeVenta}</p>
               <div class="precio-cantidad">
