@@ -6,6 +6,7 @@ let mostradorDeArticulosPaginador;
 //Clicks en mostrador
 mostrador.addEventListener('click', event=>{
     const mouse = event.target
+    
     //agregar al carrito
     if(mouse.classList.contains("articulo-compra")){
         //seleccionar boton con datos
@@ -50,6 +51,9 @@ mostrador.addEventListener('click', event=>{
         }        
     }
 
+    //asigna + o - en articulo
+    asignarMasMenos(mouse)
+
     //modal imagen
     if(mouse.classList.contains("contenedor-img-articulo")){     
       const boton = document.querySelector("#" + mouse.id);
@@ -60,7 +64,6 @@ mostrador.addEventListener('click', event=>{
       modal.children[1].children[1].src = imagen
       modal.style.display = "block"
     }
-    
 })
 
 //clicks en modal cierra imagen
