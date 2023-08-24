@@ -3,9 +3,7 @@ let carrito = JSON.parse(localStorage.getItem("carrito"))
 if(carrito == null || carrito == undefined){
     carrito = []
 }
-console.log(carrito)
-//const carrito = []//temporario
-//contador de items
+
 const itemsCarrito = document.querySelector("#carritoNumber")
 if(carrito.lenght > 0){
     itemsCarrito.value = carrito.length;
@@ -47,7 +45,7 @@ document.querySelector(".drawer-carrito").addEventListener('click', event=>{
                     const footer = document.querySelector(".carrito-footer")
                     footer.style.display = "none"
                 }
-                console.log(carrito.lenght)
+                
                 localStorage.setItem("carrito", JSON.stringify(carrito))
             }
         }
@@ -57,6 +55,7 @@ document.querySelector(".drawer-carrito").addEventListener('click', event=>{
         carrito.length = 0                
         actualizarCarrito()
         localStorage.setItem("carrito", JSON.stringify(carrito))
+        mostrarToats("Carrito eliminado con éxito.")
     }
     if(mouse.id == "confirmar-compra"){
         window.location = "http://localhost:8080/check-out"

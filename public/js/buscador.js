@@ -1,3 +1,12 @@
+//LUPA Y CRUZ
+
+// document.getElementById("barra-busqueda").addEventListener("keydown", () => {
+//   const lupa = document.querySelector(".lupa")
+//   lupa.style.display = "none"
+//   const cruz = document.querySelector("#cruz-busqueda")
+//   cruz.style.display = "block"
+// })
+
 //evitar que el formulario llegue vacio
 document.getElementById("barra-busqueda").onsubmit = function(event) {
     var campoValor = document.getElementById("input-busqueda");
@@ -28,10 +37,11 @@ socket.on("resultado-busqueda", data => {
     }else{
       document.getElementById("resultado-router").innerHTML = `<h1>Resultados de búsqueda para <span class="resultado-busqueda">“${data.query}”</span></h1>`
       
+      paginador.innerHTML = ""
+
       if(data.result.length > indice){
-        mostradorDeArticulos = data.result       
-        crearPaginador();
-        asignadorPaginador(1);
+        //mostradorDeArticulos = data.result       
+        crearPaginador(data.result);
       }else{
         showArts(data.result)
       }

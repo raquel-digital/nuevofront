@@ -20,7 +20,7 @@ function showArts(art, message){
         
         mostrador.innerHTML += `
         <div class="card-articulo">
-            <div class="contenedor-img-articulo" style="background-image:url(${imagen});">
+            <div id=${p.codigo+"imagen"} class="contenedor-img-articulo" style="background-image:url(${imagen});">
                         
             </div>
             <div class="contenedor-info-articulo">
@@ -51,6 +51,9 @@ function showArts(art, message){
         boton.setAttribute("precio", p.precio);
         boton.setAttribute("nombre", p.nombre);
         boton.setAttribute("imagen", imagen);
+        const modalImagen = document.querySelector("#" + p.codigo + "imagen");
+        modalImagen.setAttribute("imagen", imagen);
+        modalImagen.setAttribute("nombre", p.nombre);
       } 
       
     });
