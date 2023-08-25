@@ -304,8 +304,14 @@ function actualizarPrecioCarrito(codigo, cant){
     if(mouse.id == "modal-colores"){
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(function(checkbox) {
+          const boton = document.getElementById("modal-colores")
           if (checkbox.checked) {
-              console.log("Se hizo clic en el checkbox y está marcado.");
+              console.log({
+                codigo: boton.getAttribute("codigo"),
+                precio: boton.getAttribute("precio"),
+                nombre: boton.getAttribute("nombre")
+              });
+              //TODO levantar articulos y mandarlos al carrito
           }
         })
     }
@@ -351,7 +357,13 @@ function actualizarPrecioCarrito(codigo, cant){
   </div>
       `
    })
-   
+
+   //setear atributos al boton de confirmar TEST
+   const boton = document.getElementById("modal-colores")
+   boton.setAttribute("codigo", art.codigo);
+   boton.setAttribute("precio", art.precio);
+   boton.setAttribute("nombre", art.nombre);
+
    modalContenidoColor.addEventListener("click", event => {
     if(event.target.classList.contains("contenedor-img-articulo")){     
       const click = event.target.classList;
