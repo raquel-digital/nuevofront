@@ -2,16 +2,25 @@
 
 // document.getElementById("barra-busqueda").addEventListener("keydown", () => {
 //   const lupa = document.querySelector(".lupa")
-//   lupa.style.display = "none"
-//   const cruz = document.querySelector("#cruz-busqueda")
-//   cruz.style.display = "block"
+//   lupa.classList.add("cruz") 
+//   if(document.getElementById("input-busqueda").value.trim() == ""){
+//     lupa.classList.remove("cruz")
+//   }  
 // })
+
+document.querySelector(".lupa").addEventListener("click", event => {
+  if(document.querySelector(".lupa").classList.contains("cruz")){
+    event.preventDefault()
+    document.getElementById("input-busqueda").value = ""
+    document.querySelector(".lupa").classList.remove("cruz")
+  }
+})
 
 //evitar que el formulario llegue vacio
 document.getElementById("barra-busqueda").onsubmit = function(event) {
     var campoValor = document.getElementById("input-busqueda");
-
-    if (campoValor.value.trim() === "") {
+    
+    if (campoValor.value.trim() === "" || event.target.classList.contains("cruz")) {
         event.preventDefault(); // Evita el envío del formulario si el campo está vacío
         
         const vacio = document.querySelector(".busqueda-vacia")

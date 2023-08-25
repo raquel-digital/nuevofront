@@ -111,24 +111,16 @@
     </div>
 	<a href="https://api.whatsapp.com/send?phone=5491136933250" target="_blank" class="whatsapp-float"><img src="img/whatsapp.svg" alt="Whatsapp" /></a>
 
-	<!-- Modal imagen ampliada - Z-index: 200 -->
-	<div class="modal-img-ampliada">
-        <button type="button" class="cerrar-modal"></button>
-        <div class="modal-img-contenido">
-            <h3>BANDERA ARGENTINA XS X 12 UNIDADES</h3>
-            <img src="img/img-ejemplo1.jpg" alt="" />
-          </div>
-      </div>
-	<!-- Fin Modal imagen ampliada -->
+	
 	
 	<!-- Modal carta de colores - z-index: 300 -->
 	<div class="modal-carta-colores">
         <div class="modal-colores fade-in">
             <div class="modal-colores-header">
                 <h2>Selecciona la cantidad de cada color para agregarlos al carrito</h2>
-                <button type="button" class="cruz"></button>
+                <button id="cerrar-modal" type="button" class="cruz"></button>
             </div>
-            <div class="modal-colores-contenido">
+            <div id="contenido-modal" class="modal-colores-contenido">
                 
                 <div class="card-articulo color-seleccionado">
                     <div class="contenedor-img-articulo img-color"></div>
@@ -437,12 +429,30 @@
     
             </div>
             <div class="modal-colores-footer">
-                <button type="button" class="btn-secundario">Cancelar</button>
-                <button type="button" class="btn-primario" disabled>Agregar al carrito</button>
+                <button id="cerrar-modal" type="button" class="btn-secundario">Cancelar</button>
+                <button id="modal-colores" type="button" class="btn-primario" disabled>Agregar al carrito</button>
             </div>
         </div>
     </div>
+        <!-- amplicion imagen en modal -->
+        <div id="apmliada-en-modal" class="modal-img-ampliada">
+            <button type="button" class="cerrar-modal"></button>
+            <div class="modal-img-contenido">
+                <h3>BANDERA ARGENTINA XS X 12 UNIDADES</h3>
+                <img src="img/img-ejemplo1.jpg" alt="" />
+              </div>
+          </div>
 	<!-- Fin Modal carta de colores -->
+
+    <!-- Modal imagen ampliada - Z-index: 200 -->
+	<div class="modal-img-ampliada">
+        <button type="button" class="cerrar-modal"></button>
+        <div class="modal-img-contenido">
+            <h3>BANDERA ARGENTINA XS X 12 UNIDADES</h3>
+            <img src="img/img-ejemplo1.jpg" alt="" />
+          </div>
+      </div>
+	<!-- Fin Modal imagen ampliada -->
 
 	<!-- Drawer carrito - z-index: 400 -->
 	<div class="drawer-carrito">

@@ -19,7 +19,7 @@
             <a href="index.php"><img class="logo-header" src="img/logo.svg" alt="Casa Raquel" /></a>
             <div class="buscador-carrito">
                 <form id="barra-busqueda" action="/buscador" method="get">
-                    <input id="input-busqueda" type="search" placeholder="Buscar artículos" name="buscar" />
+                    <input id="input-busqueda" type="text" placeholder="Buscar artículos" name="buscar" />
                     <button type="submit" class="lupa"></button>
                     <!-- <button id="cruz-busqueda" type="submit" class="cruz" style="display: none;"></button> -->
                     <p class="busqueda-vacia">El campo de búsqueda no puede quedar vacío.</p>
@@ -121,9 +121,9 @@
         <div class="modal-colores fade-in">
             <div class="modal-colores-header">
                 <h2>Selecciona la cantidad de cada color para agregarlos al carrito</h2>
-                <button type="button" class="cruz"></button>
+                <button id="cerrar-modal" type="button" class="cruz"></button>
             </div>
-            <div class="modal-colores-contenido">
+            <div id="contenido-modal" class="modal-colores-contenido">
                 
                 <div class="card-articulo color-seleccionado">
                     <div class="contenedor-img-articulo img-color"></div>
@@ -432,8 +432,8 @@
     
             </div>
             <div class="modal-colores-footer">
-                <button type="button" class="btn-secundario">Cancelar</button>
-                <button type="button" class="btn-primario" disabled>Agregar al carrito</button>
+                <button id="cerrar-modal" type="button" class="btn-secundario">Cancelar</button>
+                <button id="modal-colores" type="button" class="btn-primario" disabled>Agregar al carrito</button>
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ mostrador.addEventListener('click', event=>{
     
     //agregar al carrito
     if(mouse.classList.contains("articulo-compra")){
+
         //seleccionar boton con datos
         const clases = event.target.classList//returns arreglo con las clase
         const boton = document.querySelector("." + clases[1]);
@@ -20,10 +21,16 @@ mostrador.addEventListener('click', event=>{
             nombre: boton.getAttribute("nombre"),
             imagen: boton.getAttribute("imagen"),
             cantidad_venta: Number(cantidad_venta) 
-        }
-
-        ingresarCarrito(art)
-        mostrarToats("Artículo agregado con exito")        
+          }
+        if(mouse.textContent == "Ver Carta De Colores"){
+          //TODO medidas
+          modalColores.style.display = "block"
+          const colores = boton.getAttribute("colores")
+          cargarColores(art, colores)
+        }else{
+          ingresarCarrito(art)
+          mostrarToats("Artículo agregado con exito")
+        }      
     }
 
     //abrir y cerrar descripcion de artículo    
@@ -270,6 +277,95 @@ function actualizarPrecioCarrito(codigo, cant){
         toast.style.display = "none";
     }, 1300);
   }
+
+  //Modal colores
+  const modalColores = document.querySelector(".modal-carta-colores")
+  //modalColores.style.display = "block"//TEMP
+  modalColores.addEventListener("click", e => {
+    const mouse = e.target
+    asignarMasMenos(mouse)
+    //activar checkbox con + o -
+    if(mouse.classList.contains("mas") || mouse.classList.contains("menos")){
+      const checkBox = mouse.parentElement.parentElement.parentElement.children[2].children[1]
+      checkBox.checked = true
+      document.getElementById("modal-colores").removeAttribute("disabled");
+    }
+    if(mouse.checked){
+      document.getElementById("modal-colores").removeAttribute("disabled");
+    }
+    //CERRAR MODAL
+    if(mouse.id == "cerrar-modal"){
+      modalColores.style.display = "none"
+    }
+    if(mouse.classList.contains("modal-carta-colores")){
+      modalColores.style.display = "none"
+    }
+    //Confirmar Compra
+    if(mouse.id == "modal-colores"){
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(checkbox) {
+          if (checkbox.checked) {
+              console.log("Se hizo clic en el checkbox y está marcado.");
+          }
+        })
+    }
+  })
+
+  function cargarColores(art, colores){
+    
+    const arrColores = JSON.parse(colores)
+    console.log(art, arrColores)
+    const modalContenidoColor = document.getElementById("contenido-modal")
+    modalContenidoColor.innerHTML = ""
+
+    arrColores.forEach( e => {
+
+      const split = e.codigo.split("-")
+      let color = split[1]
+      if(split.length > 2){        
+        for (let index = 2; index < split.length; index++) {
+          color += " " + split[index]
+        }
+      }
+
+      const splitImg = art.imagen.split("/")
+           
+      console.log(splitImg)
+      const imagen = "/img/" + splitImg[2] + "/" + e.color
+
+      modalContenidoColor.innerHTML += `
+      <div class="card-articulo">
+      <div id="modal-color${e.codigo}" class="contenedor-img-articulo img-color ${imagen}" style="background-image:url(${imagen});"></div>
+      <div class="color-info">
+          <h3>${color}</h3>
+          <div class="cantidad-card">
+              <button type="button" class="menos"></button>
+              <input type="number" value="0">
+              <button type="button" class="mas"></button>
+          </div>
+      </div>
+      <div class="seleccionar-color">
+          <label for="">Seleccionar</label>
+          <input type="checkbox" id="" value="">
+      </div>
+  </div>
+      `
+   })
+   
+   modalContenidoColor.addEventListener("click", event => {
+    if(event.target.classList.contains("contenedor-img-articulo")){     
+      const click = event.target.classList;
+      const imagen = click[2]
+      const nombre = art.nombre;
+      const modalContenidoColorApliada = document.querySelector("#apmliada-en-modal")
+      modalContenidoColorApliada.children[1].children[0].textContent = nombre
+      modalContenidoColorApliada.children[1].children[1].src = imagen
+      modalContenidoColorApliada.style.display = "block"
+    }
+   })
+   
+  }
+
 
 
 

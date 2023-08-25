@@ -46,6 +46,7 @@ function showArts(art, message){
             </div>
           </div>
         `
+
         const boton = document.querySelector("." + p.codigo);
         boton.setAttribute("codigo", p.codigo);
         boton.setAttribute("precio", p.precio);
@@ -54,6 +55,12 @@ function showArts(art, message){
         const modalImagen = document.querySelector("#" + p.codigo + "imagen");
         modalImagen.setAttribute("imagen", imagen);
         modalImagen.setAttribute("nombre", p.nombre);
+        
+        //detectar carta de colores
+        if(p.colores.length > 0){
+          boton.setAttribute("colores", JSON.stringify(p.colores))
+          boton.textContent = "Ver Carta De Colores"
+        }
       } 
       
     });
