@@ -75,7 +75,7 @@ carritoBody.addEventListener('click', event=>{
 })
 
 function ingresarCarrito(art){
-    if(art.cantidad_venta < 1){
+    if(art.cantidad < 1){
         alert("La cantidad del artículo debe ser mayor a cero")
     }else{
         if(carrito.length == 0){
@@ -84,9 +84,9 @@ function ingresarCarrito(art){
             let check = false
             for(const c of carrito){
                 if(c.codigo === art.codigo){
-                    const a = Number(c.cantidad_venta)
-                    const b = Number(art.cantidad_venta)
-                    c.cantidad_venta = a + b
+                    const a = Number(c.cantidad)
+                    const b = Number(art.cantidad)
+                    c.cantidad = a + b
                     check = true
                 }
             }
@@ -126,19 +126,19 @@ function actualizarCarrito(){
 
         for(const c of carrito){
             console.log(c)
-            const precio = c.precio * c.cantidad_venta
+            const precio = c.precio * c.cantidad
             
             carritoBody.innerHTML += `
                 <div class="carrito-item">
                 <div class="contenedor-img-carrito" style="background-image: url(${c.imagen});"></div>
                 <div>
                     <p style="display: none;">${c.codigo}</p>
-                    <p class="item-titulo">${c.nombre}</p>
+                    <p class="item-titulo">${c.titulo}</p>
                     <p class="item-precio">$${Number(precio).toFixed(2)}</p>
                 </div>
                 <div class="cantidad-card">
                     <button type="button" class="menos"></button>
-                    <input class="cantidad-de-venta" type="number" value="${c.cantidad_venta}">
+                    <input class="cantidad-de-venta" type="number" value="${c.cantidad}">
                     <button type="button" class="mas"></button>
                     <a class="eliminar-link">Eliminar</a>
                 </div>

@@ -93,6 +93,10 @@ p {
 
 a {
 	text-decoration: none;
+	
+}
+nav ul li a{
+	cursor: pointer;
 }
 
 /* Header */
@@ -386,19 +390,11 @@ header {
 	border-radius: 4px;
 	background-color: #fff;
 	transition: box-shadow 0.3s ease;
-}
-
-.card-art-sk {
-	width: 397.3rem;
-	border: 1px solid #E7E7E7;
+	flex-grow: 1;
 }
 
 .card-articulo:hover {
 	box-shadow: 0px 0px 12px 4px rgba(200, 200, 200, 0.4);
-}
-
-.card-art-sk:hover {
-	box-shadow: none;
 }
 
 .color-seleccionado {
@@ -407,20 +403,12 @@ header {
 
 .contenedor-img-articulo {
   	width: 100%;
-  	aspect-ratio: 3/2;
-  	background-image: url(/img/img-ejemplo1.jpg);
+  	aspect-ratio: 3/2; 
+	/* background-image: url(/img/HC/HC8152-NEGRO.jpg); 	 */
   	background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
     background-color: #fff;
-}
-
-.contenedor-img-articulo-sk {
-	width: 100%;
-  	aspect-ratio: 3/2;
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-  	background-size: 200% 200%;
-  	animation: gradientAnimation 0.8s infinite alternate;
 }
 
 .contenedor-img-articulo:hover {
@@ -435,27 +423,8 @@ header {
 	text-transform: uppercase;
 }
 
-.h3-sk {
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-  	background-size: 200% 200%;
-  	animation: gradientAnimation 0.8s infinite alternate;
-	border-radius: 4px;
-	height: 22rem;
-	width: 75%;
-}
-
 .info-gral-articulo {
 	margin-top: 12rem;
-}
-
-.info-gral-articulo-sk {
-	margin-top: 12rem;
-	height: 20rem;
-	width: 85%;
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-  	background-size: 200% 200%;
-  	animation: gradientAnimation 0.8s infinite alternate;
-	border-radius: 4px;
 }
 
 .descripcion-titulo {
@@ -463,16 +432,6 @@ header {
 	display: grid;
 	grid-template-columns: auto 1fr;
 	column-gap: 4rem;
-}
-
-.descripcion-titulo-sk {
-	margin-top: 8rem;
-	height: 20rem;
-	width: 30%;
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-  	background-size: 200% 200%;
-  	animation: gradientAnimation 0.8s infinite alternate;
-	border-radius: 4px;
 }
 
 .descripcion-titulo p {
@@ -524,28 +483,9 @@ header {
 	font-weight: 600;
 }
 
-.precio-sk {
-	height: 20rem;
-	width: 50%;
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-  	background-size: 200% 200%;
-  	animation: gradientAnimation 0.8s infinite alternate;
-	border-radius: 4px;
-}
-
 .precio-card p:last-child {
 	margin-top: 4rem;
 	font-size: 12rem;
-}
-
-.unidades-sk {
-	margin-top: 4rem;
-	height: 20rem;
-	width: 55%;
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-  	background-size: 200% 200%;
-  	animation: gradientAnimation 0.8s infinite alternate;
-	border-radius: 4px;
 }
 
 .cantidad-card {
@@ -555,15 +495,6 @@ header {
 	justify-items: center;
 	justify-self: end;
 	column-gap: 8rem;
-}
-
-.signo-sk {
-	width: 28rem;
-	height: 28rem;
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-  	background-size: 200% 200%;
-  	animation: gradientAnimation 0.8s infinite alternate;
-	border-radius: 50%;
 }
 
 .menos {
@@ -602,15 +533,6 @@ header {
 	max-width: 24rem;
 	text-align: center;
 	outline: none;
-}
-
-.input-number-sk {
-	width: 50rem;
-	height: 45rem;
-	border-radius: 4px;
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-  	background-size: 200% 200%;
-  	animation: gradientAnimation 0.8s infinite alternate;
 }
 
 .cantidad-card input:hover {
@@ -682,54 +604,6 @@ header {
 	cursor: default;
 }
 
-.btn-primario-sk {
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-  	background-size: 200% 200%;
-  	animation: gradientAnimation 0.8s infinite alternate;
-	border: none;
-	border-radius: 4rem;
-	width: 100%;
-	height: 42rem;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 100% 100%;
-  }
-}
-
-.spinner {
-	width: 100%;
-	height: 42rem;
-    padding: 12rem 20rem;
-	border-radius: 4rem;
-    background-color: #2D8EE9;
-    border: 1px solid #2D8EE9;
-    position: relative;
-}
-
-.spinner.loading:after {
-    content: "";
-    position: absolute;
-    border-radius: 100%;
-    width: 15px;
-    height: 15px;
-    margin-top: -8px;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-left-color: #FFF;
-    border-top-color: #FFF;
-    animation: spin 0.7s infinite linear;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 .paginador {
 	margin-top: 32rem;
 	text-align: center;
@@ -755,35 +629,6 @@ header {
 	font-weight: 600;
 	background-color: #EAF9FF;
 	border: 2px solid #2D8EE9;
-}
-
-.contenedor-preg-frec {
-	margin-top: 32rem;
-}
-
-.card-preg-frec {
-	padding: 24rem 20rem;
-	border: 1px solid #C0C0C0;
-	border-radius: 4px;
-	border-left: 4px solid #1C714B;
-	margin-bottom: 24rem;
-}
-
-.card-preg-frec h2 {
-	margin-bottom: 16rem;
-}
-
-
-.card-preg-frec span {
-	font-weight: 600;
-}
-
-.card-preg-frec a {
-	color: #186CBA;
-}
-
-.card-preg-frec a:hover {
-	color: #114F89;
 }
 
 /* Fin Contenedor principal */
@@ -1032,26 +877,8 @@ footer li img {
 	margin: 8rem;
 }
 
-.card-articulo-sk {
-	border: 1px solid #E7E7E7;
-}
-
-.card-articulo-sk:hover {
-	box-shadow: none;
-}
-
 .img-color {
 	background-image: url(/img/color-ejemplo1.jpg);
-}
-
-.img-color-sk {
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-	background-size: 200% 200%;
-	animation: gradientAnimation 0.8s infinite alternate;
-}
-
-.img-color-sk:hover {
-	cursor: default;
 }
 
 .color-info {
@@ -1062,15 +889,6 @@ footer li img {
 
 .color-info h3 {
 	margin-bottom: 12rem;
-}
-
-.h3-color-info-sk {
-	height: 22rem;
-	width: 85%;
-	margin: 0 auto 12rem;
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-	background-size: 200% 200%;
-	animation: gradientAnimation 0.8s infinite alternate;
 }
 
 .color-info .cantidad-card {
@@ -1089,14 +907,6 @@ footer li img {
 .seleccionar-color label {
 	font-size: 14rem;
 	justify-self: right;
-}
-
-.seleccionar-sk {
-	height: 14rem;
-	width: 100rem;
-	background-image: linear-gradient(90deg, #D8D8D8, #F3F3F3);
-	background-size: 200% 200%;
-	animation: gradientAnimation 0.8s infinite alternate;
 }
 
 .seleccionar-color input[type="checkbox"] {
@@ -1210,7 +1020,7 @@ footer li img {
 .contenedor-img-carrito {
 	width: 72rem;
 	height: 72rem;
-	background-image: url(/img/img-ejemplo1.jpg);
+	/* background-image: url(/img/img-ejemplo1.jpg); */
   	background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

@@ -18,9 +18,9 @@ mostrador.addEventListener('click', event=>{
         const art = {            
             codigo: boton.getAttribute("codigo"),
             precio: boton.getAttribute("precio"),
-            nombre: boton.getAttribute("nombre"),
+            titulo: boton.getAttribute("nombre"),
             imagen: boton.getAttribute("imagen"),
-            cantidad_venta: Number(cantidad_venta) 
+            cantidad: Number(cantidad_venta) 
           }
         if(mouse.textContent == "Ver Carta De Colores"){
           //TODO medidas
@@ -186,6 +186,7 @@ document.querySelector("#select-categ").addEventListener('click', event=>{
 })
 
 function asignarMasMenos(mouse, cart){
+  
     //cantidades + y -
     if(mouse.classList == "mas"){
        const cant = mouse.previousElementSibling.value++
@@ -206,7 +207,7 @@ function asignarMasMenos(mouse, cart){
 function actualizarPrecioCarrito(codigo, cant){
     for(const c of carrito){
         if(c.codigo == codigo){            
-            c.cantidad_venta = cant        }
+            c.cantidad = cant        }
     }
     actualizarCarrito()
 }
@@ -280,7 +281,6 @@ function actualizarPrecioCarrito(codigo, cant){
 
   //Modal colores
   const modalColores = document.querySelector(".modal-carta-colores")
-  //modalColores.style.display = "block"//TEMP
   modalColores.addEventListener("click", e => {
     const mouse = e.target
     asignarMasMenos(mouse)
@@ -288,9 +288,25 @@ function actualizarPrecioCarrito(codigo, cant){
     if(mouse.classList.contains("mas") || mouse.classList.contains("menos")){
       const checkBox = mouse.parentElement.parentElement.parentElement.children[2].children[1]
       checkBox.checked = true
+      const cantidad = mouse.parentElement.parentElement.parentElement.children[1].children[1].children[1]
+      if(cantidad.value > 0){
+        mouse.parentElement.parentElement.parentElement.classList.add("color-seleccionado")
+        checkBox.checked = true
+      }else{
+        mouse.parentElement.parentElement.parentElement.classList.remove("color-seleccionado")
+        checkBox.checked = false
+      } 
+      //TODO funcion que quite el seleccionado
       document.getElementById("modal-colores").removeAttribute("disabled");
     }
     if(mouse.checked){
+      const cantidad = mouse.parentElement.parentElement.children[1].children[1].children[1]
+      if(cantidad.value == 0){
+        cantidad.value = 1
+      }     
+      //TODO funcion que quite el seleccionado
+      mouse.parentElement.parentElement.classList.add("color-seleccionado")
+      
       document.getElementById("modal-colores").removeAttribute("disabled");
     }
     //CERRAR MODAL
@@ -303,15 +319,26 @@ function actualizarPrecioCarrito(codigo, cant){
     //Confirmar Compra
     if(mouse.id == "modal-colores"){
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      
         checkboxes.forEach(function(checkbox) {
-          const boton = document.getElementById("modal-colores")
           if (checkbox.checked) {
-              console.log({
-                codigo: boton.getAttribute("codigo"),
-                precio: boton.getAttribute("precio"),
-                nombre: boton.getAttribute("nombre")
-              });
-              //TODO levantar articulos y mandarlos al carrito
+             const boton = document.getElementById("modal-colores")
+             const click = checkbox.parentElement.parentElement.firstElementChild.classList 
+             const imagen = click[2] 
+             const codigo = click[3]
+             const cantidad = checkbox.parentElement.parentElement.children[1].children[1].children[1].value
+             
+             const art = {
+               codigo: codigo,
+               imagen: imagen,
+               precio: boton.getAttribute("precio"),
+               titulo: boton.getAttribute("nombre"),
+               cantidad: Number(cantidad)
+             };
+
+             ingresarCarrito(art)
+             mostrarToats("Artículo agregado con exito")
+             modalColores.style.display = "none"
           }
         })
     }
@@ -320,7 +347,7 @@ function actualizarPrecioCarrito(codigo, cant){
   function cargarColores(art, colores){
     
     const arrColores = JSON.parse(colores)
-    console.log(art, arrColores)
+    
     const modalContenidoColor = document.getElementById("contenido-modal")
     modalContenidoColor.innerHTML = ""
 
@@ -335,13 +362,11 @@ function actualizarPrecioCarrito(codigo, cant){
       }
 
       const splitImg = art.imagen.split("/")
-           
-      console.log(splitImg)
       const imagen = "/img/" + splitImg[2] + "/" + e.color
 
       modalContenidoColor.innerHTML += `
       <div class="card-articulo">
-      <div id="modal-color${e.codigo}" class="contenedor-img-articulo img-color ${imagen}" style="background-image:url(${imagen});"></div>
+      <div id="modal-color${e.codigo}" class="contenedor-img-articulo img-color ${imagen} ${e.codigo}" style="background-image:url(${imagen});"></div>
       <div class="color-info">
           <h3>${color}</h3>
           <div class="cantidad-card">
@@ -360,9 +385,8 @@ function actualizarPrecioCarrito(codigo, cant){
 
    //setear atributos al boton de confirmar TEST
    const boton = document.getElementById("modal-colores")
-   boton.setAttribute("codigo", art.codigo);
    boton.setAttribute("precio", art.precio);
-   boton.setAttribute("nombre", art.nombre);
+   boton.setAttribute("nombre", art.titulo);
 
    modalContenidoColor.addEventListener("click", event => {
     if(event.target.classList.contains("contenedor-img-articulo")){     
