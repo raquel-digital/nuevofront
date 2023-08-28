@@ -1,7 +1,15 @@
 const paginador = document.querySelector(".paginador")
 const indice = 50
 
-document.addEventListener('DOMContentLoaded', (e) => {
+document.addEventListener('DOMContentLoaded', () => {
+    //local storage
+    const carritoAnterior = JSON.parse(localStorage.getItem("carrito"))
+    if(carritoAnterior){
+        carritoAnterior.forEach(e => {
+            ingresarCarrito(e)
+        });
+    }
+
     socket.on("categ-result", data => {
         if(data.succes){        
             mostrador.innerHTML = ""
@@ -40,11 +48,24 @@ document.addEventListener('DOMContentLoaded', (e) => {
             alert("Categoria no valida")
         }    
     });
+
+    socket.on("tag-result", tag => {
+      const articulosTags = [];
+      tag = tag.replaceAll(" ", "-");
+      for(let p of mostradorDeArticulos){
+        if(p.tags.includes(tag)){      
+          articulosTags.push(p);
+        }  
+    }
+      loadTag(articulosTags);
+    });
+
+    socket.on("resultado-vacio", () => {
+      const barra =  document.getElementById("barra-busqueda")
+      barra.classList.add("buscador-error")
+    });
 })
-socket.on("resultado-vacio", () => {
-  const barra =  document.getElementById("barra-busqueda")
-  barra.classList.add("buscador-error")
-});
+
 
 
   

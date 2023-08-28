@@ -1,21 +1,15 @@
-//local storage
-let carrito = JSON.parse(localStorage.getItem("carrito"))
-if(carrito == null || carrito == undefined){
-    carrito = []
-}
+const carrito = []
 
 const itemsCarrito = document.querySelector("#carritoNumber")
 if(carrito.lenght > 0){
-    itemsCarrito.value = carrito.length;
+    itemsCarrito.textContent = carrito.length;
 }else{
     itemsCarrito.style.display = "none"
 }
 
 //abrir carrito
 document.querySelector(".carrito").addEventListener('click', event=>{
-    
     actualizarCarrito()
-    
     //mostrar carrito
     const carritoShow = document.querySelector(".drawer-carrito");
     carritoShow.style.display = "block"
@@ -29,33 +23,60 @@ document.querySelector(".drawer-carrito").addEventListener('click', event=>{
   //cerrar carrito
   if(mouse.id == "cerrarCarrito"){
     carritoShow.style.display = "none"
+    if(carrito.length > 0){
+        itemsCarrito.style.display = "block"
+        itemsCarrito.textContent = carrito.length;
+    }    
   }
+
   //eliminar artículo individual
   if(mouse.classList.contains("eliminar-articulo")){
         const codigo = event.target.parentElement.childNodes[3].childNodes[1].textContent
-        
-        for(let i=0; i<carrito.length; i++){
-            if(carrito[i].codigo == codigo){
-                carrito.splice(i, 1)
-                //itemsCarrito.value = carrito.length;                
-                actualizarCarrito()
-                
+       
+        const confirm = document.getElementById("eliminar-item")
+        confirm.style.display = "block"
+        confirm.addEventListener("click", event => {
+            if(event.target.textContent == "Sí, eliminar"){
+                for(let i=0; i<carrito.length; i++){
+                    if(carrito[i].codigo == codigo){
+                        console.log(carrito[i])
+                        carrito.splice(i, 1)
+                        actualizarCarrito()
+                    }
+                }
                 if(carrito.lenght == 0){                    
-                    //itemsCarrito.style.display = "none"
+                    itemsCarrito.style.display = "none"
                     const footer = document.querySelector(".carrito-footer")
                     footer.style.display = "none"
                 }
-                
+                confirm.style.display = "none"
                 localStorage.setItem("carrito", JSON.stringify(carrito))
             }
-        }
+            if(event.target.textContent == "No" || event.target.classList.contains("cruz")){
+                confirm.style.display = "none"
+            }
+    })
     }
 
     if(mouse.id == "eliminar-carrito"){
-        carrito.length = 0                
-        actualizarCarrito()
-        localStorage.setItem("carrito", JSON.stringify(carrito))
-        mostrarToats("Carrito eliminado con éxito.")
+        const confirm = document.getElementById("carrito-vaciar")
+        confirm.style.display = "block"
+        confirm.addEventListener("click", event => {
+            if(event.target.textContent == "Sí, eliminar"){
+                carrito.length = 0                
+                actualizarCarrito()
+                localStorage.setItem("carrito", JSON.stringify(carrito))
+                confirm.style.display = "none"
+                carritoShow.style.display = "none"
+                itemsCarrito.style.display = "none"
+                itemsCarrito.textContent = carrito.length
+                mostrarToats("Carrito eliminado con éxito.")
+            }
+            if(event.target.textContent == "No" || event.target.classList.contains("cruz")){
+                confirm.style.display = "none"
+            }
+        })
+        
     }
     if(mouse.id == "confirmar-compra"){
         window.location = "http://localhost:8080/check-out"
@@ -64,8 +85,12 @@ document.querySelector(".drawer-carrito").addEventListener('click', event=>{
     //TEST cierre haciendo click fuera del carrito
     if (mouse.classList.contains("drawer-carrito")) {
         carritoShow.style.display = "none"
+        if(carrito.length > 0){
+            itemsCarrito.style.display = "block"
+            itemsCarrito.textContent = carrito.length;
+        }
     }    
-    console.log(mouse.classList)
+    
 })
 
 
@@ -75,6 +100,7 @@ carritoBody.addEventListener('click', event=>{
 })
 
 function ingresarCarrito(art){
+
     if(art.cantidad < 1){
         alert("La cantidad del artículo debe ser mayor a cero")
     }else{
@@ -119,13 +145,14 @@ function actualizarCarrito(){
             <p class="empty-texto">Los artículos se agregarán acá luego de apretar “Agregar al carrito” en cada uno de ellos.</p>
             <button type="button" class="btn-primario">Ir a comprar</button>
          </div>`
+
+         itemsCarrito.style.display = "none"
     }else{
         const footer = document.querySelector(".carrito-footer")
         footer.style.display = "block"
         document.getElementById("eliminar-carrito").style.display = "block"
 
         for(const c of carrito){
-            console.log(c)
             const precio = c.precio * c.cantidad
             
             carritoBody.innerHTML += `
@@ -148,22 +175,33 @@ function actualizarCarrito(){
             sumaTotal += precio
         } 
         
-        itemsCarrito.value = carrito.length;
-        itemsCarrito.style.display = "none"   
+        itemsCarrito.textContent = carrito.length;
+        //itemsCarrito.style.display = "none"   
     }
     
     //BUG SI NO HAY ELEAMENTOS CARGADOS NO ABRE EL CARRITO
     const inputCantidadCarrito = document.querySelector(".cantidad-de-venta")
     if(inputCantidadCarrito){
-        inputCantidadCarrito.addEventListener("keyup", event => {
-            const value = event.target.value
-            if(value == "" || value == 0){
-                inputCantidadCarrito.value = 1
-            }
-            const codigo = event.target.parentElement.parentElement.childNodes[3].childNodes[1].textContent
-            actualizarPrecioCarrito(codigo, value)
+        let t = 500
+        inputCantidadCarrito.addEventListener("keyup", event => {  
+            t += 100          
+            setTimeout(function() {
+                const value = event.target.value
+                if(value == "" || value == 0){
+                    inputCantidadCarrito.value = 1
+                }
+                const codigo = event.target.parentElement.parentElement.childNodes[3].childNodes[1].textContent
+                actualizarPrecioCarrito(codigo, value)
+            }, t);
         })
     }    
     document.getElementById("total-carrito-suma").textContent = "$ " + Number(sumaTotal).toFixed(2) 
+}
+
+function modalDelete(){
+    const confirm = document.querySelector(".modal-salir-guardar")
+    confirm.style.display = "block"
+    const delMessage = document.getElementById("delete-message")
+    delMessage.textContent = txt
 }
 

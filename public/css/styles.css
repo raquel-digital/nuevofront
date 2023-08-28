@@ -95,6 +95,10 @@ a {
 	text-decoration: none;
 }
 
+nav ul li a{
+	cursor: pointer;
+}
+
 /* Header */
 
 .contenedor-header {

@@ -55,10 +55,25 @@ io.on('connect', socket => {
             socket.emit("set-envio", envios);
         })     
      })();
-     socket.on("success", () => {
+     
+    
+    //CHECK OUT
+    socket.on("success", () => {
         const provincias = require("./utils/provincias.json");
         socket.emit("provincias", provincias);
-    })        
+    }) 
+    socket.on("nuevo-pedido", data => {        
+        const pedidoProssesor = require("./utils/procesarPedido");
+        const result = pedidoProssesor(data);
+        if(result.state){
+            const mongoCrud = require("./api/users/controller");            
+            mongoCrud.ingresar(data);
+        }
+        socket.emit("valPeticion", result);
+    })
+    socket.on("mail", data =>{
+        mailEmit(data);        
+    })     
 });
      
 

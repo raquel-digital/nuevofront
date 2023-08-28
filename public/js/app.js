@@ -102,7 +102,7 @@ if(filtros){
                   articulosTags.push(p);
                 }
           }
-           
+            
             loadTag(articulosTags, clik);
           }
     })
@@ -114,8 +114,7 @@ if(filtros){
 function tags(art){
     let tagCheck= []
     const botonera = document.querySelector(".filtros")
-    botonera.innerHTML = `<h2>Filtrar por:</h2>
-    `;
+    botonera.innerHTML = `<h2 style="margin-bottom: 12rem;">Filtrar por:</h2>`;
     botonera.innerHTML += `<button type="button" class="tag hashtag">inicio</button>`;
     for(let t of art){  
             
@@ -145,7 +144,18 @@ function tags(art){
 
 //Cargar TAGS de artículos
 function loadTag(articulosTags, target){ 
-    
+  let nuevoQueryString
+  let queryString = window.location.search;
+
+  if(queryString.includes("tag")){
+    const split = queryString.split("&")
+    nuevoQueryString = split[0] + "&tag="+target;
+  }else{
+    nuevoQueryString = queryString + "&tag="+target;
+  }
+  // Actualizar la URL en la barra de direcciones sin recargar la página
+  window.history.replaceState({}, "", nuevoQueryString);
+
     const tags = document.querySelectorAll(".hashtag")
     tags.forEach(e => {        
         if(e.classList.contains("tag-seleccionado")){
@@ -352,36 +362,37 @@ function actualizarPrecioCarrito(codigo, cant){
     modalContenidoColor.innerHTML = ""
 
     arrColores.forEach( e => {
-
-      const split = e.codigo.split("-")
-      let color = split[1]
-      if(split.length > 2){        
-        for (let index = 2; index < split.length; index++) {
-          color += " " + split[index]
+      if(e.mostrar){
+        const split = e.codigo.split("-")
+        let color = split[1]
+        if(split.length > 2){        
+          for (let index = 2; index < split.length; index++) {
+            color += " " + split[index]
+          }
         }
+
+        const splitImg = art.imagen.split("/")
+        const imagen = "/img/" + splitImg[2] + "/" + e.color
+
+        modalContenidoColor.innerHTML += `
+        <div class="card-articulo">
+        <div id="modal-color${e.codigo}" class="contenedor-img-articulo img-color ${imagen} ${e.codigo}" style="background-image:url(${imagen});"></div>
+        <div class="color-info">
+            <h3>${color}</h3>
+            <div class="cantidad-card">
+                <button type="button" class="menos"></button>
+                <input type="number" value="0">
+                <button type="button" class="mas"></button>
+            </div>
+        </div>
+        <div class="seleccionar-color">
+            <label for="">Seleccionar</label>
+            <input type="checkbox" id="" value="">
+        </div>
+        </div>
+        `
       }
-
-      const splitImg = art.imagen.split("/")
-      const imagen = "/img/" + splitImg[2] + "/" + e.color
-
-      modalContenidoColor.innerHTML += `
-      <div class="card-articulo">
-      <div id="modal-color${e.codigo}" class="contenedor-img-articulo img-color ${imagen} ${e.codigo}" style="background-image:url(${imagen});"></div>
-      <div class="color-info">
-          <h3>${color}</h3>
-          <div class="cantidad-card">
-              <button type="button" class="menos"></button>
-              <input type="number" value="0">
-              <button type="button" class="mas"></button>
-          </div>
-      </div>
-      <div class="seleccionar-color">
-          <label for="">Seleccionar</label>
-          <input type="checkbox" id="" value="">
-      </div>
-  </div>
-      `
-   })
+    }) 
 
    //setear atributos al boton de confirmar TEST
    const boton = document.getElementById("modal-colores")
